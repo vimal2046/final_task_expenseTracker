@@ -133,6 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <td>${index + 1}</td>
                     <td>${formattedAmount}</td>
                     <td><span class="badge ${getCategoryBadgeClass(expense.category)}">${expense.category}</span></td>
+                    <td>${expense.description}</td>
                     <td>${formattedDate}</td>
                     <td>
                         <button class="btn btn-primary btn-sm edit-expense me-1">
@@ -172,6 +173,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     <option value="Others" ${expense.category === "Others" ? "selected" : ""}>Others</option>
                 </select>
             </td>
+                    <td>
+                <input type="text" class="form-control form-control-sm" value="${expense.description}" id="edit-description">
+            </td>
             <td><input type="date" class="form-control form-control-sm" value="${expense.date}" id="edit-date"></td>
             <td>
                 <button class="btn btn-success btn-sm update-expense">
@@ -197,6 +201,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const row = event.target.closest("tr");
         const updatedAmount = document.getElementById("edit-amount").value;
         const updatedCategory = document.getElementById("edit-category").value;
+        const updatedDescription = document.getElementById("edit-description").value;
         const updatedDate = document.getElementById("edit-date").value;
 
         if (!updatedAmount || !updatedCategory || !updatedDate) {
@@ -210,6 +215,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 ...expenses[expenseIndex],
                 amount: parseFloat(updatedAmount),
                 category: updatedCategory,
+                description: updatedDescription,
                 date: updatedDate
             };
             
@@ -254,7 +260,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function formatCurrency(amount) {
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
-            currency: 'USD'
+            currency: 'INR'
         }).format(amount);
     }
 
